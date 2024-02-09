@@ -17,7 +17,9 @@ const divide = function (n1, n2) {
 let num1 = null;
 let num2 = null;
 let operator = null;
+let operator2 = null;
 let currentDisplay = null;
+let result;
 
 const operate = function (num1, num2, operator) {
     if (operator === "+") {
@@ -46,15 +48,46 @@ numBtns.forEach((item) => {
 opBtns.forEach((item) => {
     item.addEventListener("click", (event) => {
         getOperator(event);
-    })
+    });
+});
+
+equalsBtn.addEventListener("click", (event) => {
+    evaluate();
 })
+
 function updateDisplay(event) {
     display.textContent += `${event.target.id}`;
     currentDisplay = display.textContent;
-}
+    if (!num1) {
+        num1 = Number(currentDisplay);
+        return;
+    } else {
+        display.textContent = "";
+        display.textContent += `${event.target.id}`;
+        currentDisplay = display.textContent;
+        num2 = Number(currentDisplay);
+        return;
+    }
+};
 
 function getOperator(event) {
-    operator = event.target.id;
+    if (!operator) {
+        operator = event.target.id;
+        return;
+    } else {
+        operator2 = event.target.id;
+    }
+};
+
+function evaluate() {
+    if (!num1 || !num2) {
+        return;
+    } else if (operator2) {
+        operator = operator2;
+        return result = operate(num1, num2, operator);
+    } else {
+        return result = operate(num1, num2, operator);
+    }
 }
 
 
