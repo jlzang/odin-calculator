@@ -84,10 +84,11 @@ function evaluate() {
         return;
     } else if (operator2) {
         operator = operator2;
-        return result = operate(num1, num2, operator);
+        result = operate(num1, num2, operator);
     } else {
-        return result = operate(num1, num2, operator);
+        result = operate(num1, num2, operator);
     }
+    return display.textContent = result;
 }
 
 
