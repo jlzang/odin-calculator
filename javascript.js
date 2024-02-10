@@ -18,8 +18,8 @@ let num1 = null;
 let num2 = null;
 let operator = null;
 let operator2 = null;
-let currentDisplay = null;
 let result;
+let shouldResetDisplay = false
 
 const operate = function (num1, num2, operator) {
     if (operator === "+") {
@@ -39,57 +39,42 @@ let equalsBtn = document.querySelector(".equals");
 let clearBtn = document.querySelector(".clear");
 let display = document.querySelector(".display");
 
-numBtns.forEach((item) => {
-    item.addEventListener("click", (event) => {
-        updateDisplay(event);
-    });
+numBtns.forEach((button) => {
+    button.addEventListener("click", () => getOperand(button.id));
 });
 
-opBtns.forEach((item) => {
-    item.addEventListener("click", (event) => {
-        getOperator(event);
-    });
+opBtns.forEach((button) => {
+    button.addEventListener("click", () => getOperator(button.id));
 });
 
 equalsBtn.addEventListener("click", (event) => {
     evaluate();
 })
 
-function updateDisplay(event) {
-    display.textContent += `${event.target.id}`;
-    currentDisplay = display.textContent;
-    if (!num1) {
-        num1 = Number(currentDisplay);
-        return;
-    } else {
-        display.textContent = "";
-        display.textContent += `${event.target.id}`;
-        currentDisplay = display.textContent;
-        num2 = Number(currentDisplay);
-        return;
-    }
-};
+function resetDisplay() {
+    display.textContent = "";
+    shouldResetDisplay = false;
+}
 
-function getOperator(event) {
-    if (!operator) {
-        operator = event.target.id;
-        return;
-    } else {
-        operator2 = event.target.id;
-    }
+function getOperand(number) {
+    if (shouldResetDisplay) {resetDisplay()};
+    display.textContent += number;
+}
+
+function getOperator(selection) {
+    if (!num1) {
+        num1 = Number(display.textContent);
+        shouldResetDisplay = true;
+    };
+    operator = selection;
 };
 
 function evaluate() {
-    if (!num1 || !num2) {
-        return;
-    } else if (operator2) {
-        operator = operator2;
-        result = operate(num1, num2, operator);
-    } else {
-        result = operate(num1, num2, operator);
-    }
-    return display.textContent = result;
-}
+    if (!num1) {return};
+    if (display.textContent === "") {return};
+    num2 = Number(display.textContent);
+    display.textContent = operate(num1, num2, operator);
+};
 
 
 /*let numBtns = document.querySelectorAll(".number");
