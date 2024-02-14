@@ -56,19 +56,27 @@ clearBtn.addEventListener("click", () => clear());
 function resetDisplay() {
     display.textContent = "";
     shouldResetDisplay = false;
-}
+};
 
 function getOperand(number) {
     if (shouldResetDisplay) { resetDisplay() };
     display.textContent += number;
-}
+};
 
 function getOperator(selection) {
     if (!num1) {
         num1 = Number(display.textContent);
         shouldResetDisplay = true;
     };
-    operator = selection;
+    if (operator) {
+        num2 = Number(display.textContent);
+        num1 = operate(num1, num2, operator);
+        display.textContent = num1;
+        num2 = null;
+        shouldResetDisplay = true;
+    } else {
+       operator = selection; 
+    }
 };
 
 function evaluate() {
