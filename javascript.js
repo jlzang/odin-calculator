@@ -65,8 +65,12 @@ function getOperand(number) {
 
 function getOperator(selection) {
     if (!num1) {
-        num1 = Number(display.textContent);
-        shouldResetDisplay = true;
+        if (display.textContent === "") {
+            return;
+        } else {
+            num1 = Number(display.textContent);
+            shouldResetDisplay = true;
+        };
     };
     if (operator) {
         num2 = Number(display.textContent);
@@ -74,9 +78,8 @@ function getOperator(selection) {
         display.textContent = num1;
         num2 = null;
         shouldResetDisplay = true;
-    } else {
-       operator = selection; 
-    }
+    };
+    operator = selection;
 };
 
 function evaluate() {
