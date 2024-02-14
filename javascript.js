@@ -51,13 +51,15 @@ equalsBtn.addEventListener("click", (event) => {
     evaluate();
 })
 
+clearBtn.addEventListener("click", () => clear());
+
 function resetDisplay() {
     display.textContent = "";
     shouldResetDisplay = false;
 }
 
 function getOperand(number) {
-    if (shouldResetDisplay) {resetDisplay()};
+    if (shouldResetDisplay) { resetDisplay() };
     display.textContent += number;
 }
 
@@ -70,11 +72,19 @@ function getOperator(selection) {
 };
 
 function evaluate() {
-    if (!num1) {return};
-    if (display.textContent === "") {return};
+    if (!num1) { return };
+    if (display.textContent === "") { return };
     num2 = Number(display.textContent);
     display.textContent = operate(num1, num2, operator);
 };
+
+function clear() {
+    display.textContent = "";
+    num1 = null;
+    num2 = null;
+    operator = null;
+    operator2 = null;
+}
 
 
 /*let numBtns = document.querySelectorAll(".number");
