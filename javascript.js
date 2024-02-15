@@ -17,7 +17,6 @@ const divide = function (n1, n2) {
 let num1 = null;
 let num2 = null;
 let operator = null;
-let operator2 = null;
 let result;
 let shouldResetDisplay = false
 
@@ -64,29 +63,18 @@ function getOperand(number) {
 };
 
 function getOperator(selection) {
-    if (!num1) {
-        if (display.textContent === "") {
-            return;
-        } else {
-            num1 = Number(display.textContent);
-            shouldResetDisplay = true;
-        };
-    };
-    if (operator) {
-        num2 = Number(display.textContent);
-        num1 = operate(num1, num2, operator);
-        display.textContent = num1;
-        num2 = null;
-        shouldResetDisplay = true;
-    };
+    if (display.textContent === "") { return };
+    if (operator !== null) { evaluate() };
+    num1 = Number(display.textContent);
     operator = selection;
+    shouldResetDisplay = true;
 };
 
 function evaluate() {
-    if (!num1) { return };
-    if (display.textContent === "") { return };
+    if (!num1 || display.textContent === "" || shouldResetDisplay) { return };
     num2 = Number(display.textContent);
     display.textContent = operate(num1, num2, operator);
+    operator = null;
 };
 
 function clear() {
