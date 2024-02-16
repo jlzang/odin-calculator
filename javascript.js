@@ -56,6 +56,8 @@ clearBtn.addEventListener("click", () => clear());
 
 function getLastClicked(event) {return lastClicked = event.target.className};
 
+function roundResult(number) {return Math.round(number * 1000) / 1000};
+
 function resetDisplay() {
     display.textContent = "";
     shouldResetDisplay = false;
@@ -77,8 +79,14 @@ function getOperator(selection) {
 function evaluate() {
     if (display.textContent !== "" && !operator) {shouldResetDisplay = true};
     if (!num1 || display.textContent === "" || shouldResetDisplay || !operator) { return };
+    if (operator === "/" && display.textContent === "0") {
+        alert("You can't divide by zero!");
+        operator = null;
+        shouldResetDisplay = true;
+        return;
+    };
     num2 = Number(display.textContent);
-    display.textContent = operate(num1, num2, operator);
+    display.textContent = roundResult(operate(num1, num2, operator));
     operator = null;
     if (lastClicked === "equals") {shouldResetDisplay = true};
 };
