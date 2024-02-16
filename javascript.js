@@ -19,6 +19,7 @@ let num2 = null;
 let operator = null;
 let result;
 let shouldResetDisplay = false
+let lastClicked = null;
 
 const operate = function (num1, num2, operator) {
     if (operator === "+") {
@@ -48,9 +49,12 @@ opBtns.forEach((button) => {
 
 equalsBtn.addEventListener("click", (event) => {
     evaluate();
-})
+    getLastClicked(event);
+});
 
 clearBtn.addEventListener("click", () => clear());
+
+function getLastClicked(event) {return lastClicked = event.target.className};
 
 function resetDisplay() {
     display.textContent = "";
@@ -71,10 +75,12 @@ function getOperator(selection) {
 };
 
 function evaluate() {
-    if (!num1 || display.textContent === "" || shouldResetDisplay) { return };
+    if (display.textContent !== "" && !operator) {shouldResetDisplay = true};
+    if (!num1 || display.textContent === "" || shouldResetDisplay || !operator) { return };
     num2 = Number(display.textContent);
     display.textContent = operate(num1, num2, operator);
     operator = null;
+    if (lastClicked === "equals") {shouldResetDisplay = true};
 };
 
 function clear() {
