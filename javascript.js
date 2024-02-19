@@ -77,8 +77,9 @@ function getOperator(selection) {
 };
 
 function evaluate() {
+    if (shouldResetDisplay) {resetDisplay()};
     if (display.textContent !== "" && !operator) {shouldResetDisplay = true};
-    if (!num1 || display.textContent === "" || shouldResetDisplay || !operator) { return };
+    if (!num1 || display.textContent === "" || !operator) { return };
     if (operator === "/" && display.textContent === "0") {
         alert("You can't divide by zero!");
         operator = null;
@@ -88,6 +89,7 @@ function evaluate() {
     num2 = Number(display.textContent);
     display.textContent = roundResult(operate(num1, num2, operator));
     operator = null;
+    shouldResetDisplay = true;
     if (lastClicked === "equals") {shouldResetDisplay = true};
 };
 
