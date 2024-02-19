@@ -64,7 +64,8 @@ function resetDisplay() {
 };
 
 function getOperand(number) {
-    if (shouldResetDisplay) { resetDisplay() };
+    if (shouldResetDisplay || display.textContent === "0") { resetDisplay() };
+    if (display.textContent.length > 8) {return;}
     display.textContent += number;
 };
 
